@@ -48,25 +48,25 @@
     _mapView.delegate =self;
     
     //添加图层覆盖物，可画出区域边界
-//    NSArray *arr =@[@[@"121.266375",@"30.339198"],@[@"121.84474",@"29.854256"],@[@"121.542335",@"29.546055"],@[@"121.046757",@"29.60536"]];
-//    CLLocationCoordinate2D *coors = malloc([arr count]*sizeof(CLLocationCoordinate2D));
-//    for (int i =0; i <arr.count; i ++) {
-//        coors[i].longitude =[arr[i][0] doubleValue];
-//        coors[i].latitude =[arr[i][1] doubleValue];
-//    }
-//
-//    BMKPolygon *gon =[BMKPolygon polygonWithCoordinates:coors count:arr.count] ;
-//    [_mapView addOverlay:gon];
-//
-//    NSArray *arr1 =@[@[@"121.957424",@"30.180482"],@[@"122.110351",@"30.160499"],@[@"122.328819",@"29.962451"]];
-//    CLLocationCoordinate2D *coors1 = malloc([arr count]*sizeof(CLLocationCoordinate2D));
-//    for (int i =0; i <arr1.count; i ++) {
-//        coors1[i].longitude =[arr1[i][0] doubleValue];
-//        coors1[i].latitude =[arr1[i][1] doubleValue];
-//    }
-//
-//    BMKPolygon *gon1 =[BMKPolygon polygonWithCoordinates:coors1 count:arr1.count] ;
-//    [_mapView addOverlay:gon1];
+    NSArray *arr =@[@[@"121.266375",@"30.339198"],@[@"121.84474",@"29.854256"],@[@"121.542335",@"29.546055"],@[@"121.046757",@"29.60536"]];
+    CLLocationCoordinate2D *coors = malloc([arr count]*sizeof(CLLocationCoordinate2D));
+    for (int i =0; i <arr.count; i ++) {
+        coors[i].longitude =[arr[i][0] doubleValue];
+        coors[i].latitude =[arr[i][1] doubleValue];
+    }
+
+    BMKPolygon *gon =[BMKPolygon polygonWithCoordinates:coors count:arr.count] ;
+    [_mapView addOverlay:gon];
+
+    NSArray *arr1 =@[@[@"121.957424",@"30.180482"],@[@"122.110351",@"30.160499"],@[@"122.328819",@"29.962451"]];
+    CLLocationCoordinate2D *coors1 = malloc([arr count]*sizeof(CLLocationCoordinate2D));
+    for (int i =0; i <arr1.count; i ++) {
+        coors1[i].longitude =[arr1[i][0] doubleValue];
+        coors1[i].latitude =[arr1[i][1] doubleValue];
+    }
+
+    BMKPolygon *gon1 =[BMKPolygon polygonWithCoordinates:coors1 count:arr1.count] ;
+    [_mapView addOverlay:gon1];
     
     
     
