@@ -1,0 +1,89 @@
+//
+//  Use this file to import your target's public headers that you would like to expose to Swift.
+//
+
+//
+//  PrefixHeader.pch
+//  ProjectDemo
+//
+//  Created by 俞乃胜, Stephen on 2017/12/8.
+//  Copyright © 2017年 俞乃胜, Stephen. All rights reserved.
+//
+#import <Masonry.h>
+#import <MJRefresh.h>
+#import <IQKeyboardManager.h>
+#import <AFNetworking.h>
+#import <SDCycleScrollView.h>
+#import <SVProgressHUD.h>
+#import <SDImageCache.h>
+#import <UIImageView+WebCache.h>
+#import <UIButton+WebCache.h>
+#import <MMDrawerController.h>
+#import <MMDrawerBarButtonItem.h>
+#import <BaiduMapAPI_Base/BMKBaseComponent.h>//引入base相关所有的头文件
+#import <BaiduMapAPI_Map/BMKMapComponent.h>//引入地图功能所有的头文件
+#import <BaiduMapAPI_Search/BMKSearchComponent.h>//引入检索功能所有的头文件
+#import <BaiduMapAPI_Cloud/BMKCloudSearchComponent.h>//引入云检索功能所有的头文件
+#import <BaiduMapAPI_Location/BMKLocationComponent.h>//引入定位功能所有的头文件
+#import <BaiduMapAPI_Utils/BMKUtilsComponent.h>//引入计算工具所有的头文件
+#import <BaiduMapAPI_Radar/BMKRadarComponent.h>//引入周边雷达功能所有的头文件
+#import <BaiduMapAPI_Map/BMKMapView.h>//只引入所需的单个头文件
+
+#import <ReactiveObjC.h>//RAC的头文件
+//#import <AAGlobalMacro.h>
+//#import <AAChartView.h>
+#import "JFLocation.h"
+#import "TZImagePickerController.h"//图片选择器
+#import "YFScrollView.h"
+
+#import "PubulicObj.h"
+#import "AFNetRequest.h"
+#import "CustomAccount.h"
+
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
+//判断字符串是否为空
+#define strIsEmpty(str) ([str isKindOfClass:[NSNull class]] || str == nil || [str length]<1 ? YES : NO )
+//防止Block中的self循环引用的宏定义
+#define WS(blockSelf) __weak __typeof(&*self)blockSelf = self;
+//代替字符串，在请求数据的时候用instailString代替换行符@“\n”
+#define instailString @"     "
+//自定义NSLog
+#ifdef DEBUG
+#define DLog(...) NSLog(__VA_ARGS__)
+#else
+#define DLog(...)
+#endif
+#define screenWigth [[UIScreen mainScreen] bounds].size.width
+#define screenHeight [[UIScreen mainScreen] bounds].size.height
+#define ActivityZuiXiTableViewCellHeight 145
+
+#define HEXCOLOR(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000)>>16))/255.0 green:((float)((rgbValue & 0xFF00)>>8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define fuse RGBA(246, 96, 78, 1)
+#define zhuse RGBA(34,145,224,1)
+#define imgHeght(H) H *screenWigth /320.0//图片按比例放大
+//设置字体大小
+#define FontSize(font) [UIFont systemFontOfSize:font]
+
+#define BASEURL @""
+
+
+#define TENANCY @"tenancy"//租户名
+#define NAME @"name"//用户名
+#define PASSWORD @"password"//密码
+
+#define REFRESHTASKLIST @"REFRESHTASKLIST"//刷新任务列表
+
+#define StartBarHeight ([UIApplication sharedApplication].statusBarFrame.size.height +44)
+
+#define SafeAreaBottomHeight (screenHeight == 812.0 ? 34.0 : 0.0)
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */
+

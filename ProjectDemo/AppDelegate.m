@@ -7,8 +7,17 @@
 //
 
 #import "AppDelegate.h"
-
-@interface AppDelegate ()
+#import "ViewController.h"
+//#ifdef NSFoundationVersionNumber_iOS_9_x_Max
+#import <UserNotifications/UserNotifications.h>
+// 如果需要使用idfa功能所需要引入的头文件（可选）
+#import <AdSupport/AdSupport.h>
+@interface AppDelegate ()<BMKLocationServiceDelegate>
+{
+    BMKMapManager *_mapManager;
+    
+}
+@property (nonatomic,strong)JFLocation *loc;
 
 @end
 
@@ -16,7 +25,38 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    _mapManager = [[BMKMapManager alloc]init];
+    // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+    BOOL ret = [_mapManager start:@"ThVgf1vtm9rFdwTF23qVzZIYUZefdZkK"  generalDelegate:nil];
+    if (!ret) {
+        NSLog(@"manager start failed!");
+    }else{
+        NSLog(@"注册成功");
+        
+    }
+
+    self.loc =[[JFLocation alloc]init];//定位
+
+    
+    //让键盘下去的第三方库
+    IQKeyboardManager *manager = [IQKeyboardManager sharedManager];
+    manager.enable = YES;
+    manager.shouldResignOnTouchOutside = YES;
+    manager.shouldToolbarUsesTextFieldTintColor = YES;
+    manager.enableAutoToolbar = YES;
+    
+    self.window = [[UIWindow alloc] init];
+    ViewController *VC =[[ViewController alloc]init];
+    UINavigationController *nav =[[UINavigationController alloc]initWithRootViewController:VC];
+    [nav.navigationBar setTitleTextAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:18],NSForegroundColorAttributeName:[UIColor whiteColor]}];
+    nav.navigationBar.barTintColor =zhuse;
+    nav.navigationBar.translucent =NO;
+    self.window.backgroundColor =[UIColor whiteColor];
+    self.window.rootViewController =nav;
+    [self.window makeKeyAndVisible];
+
+ 
     return YES;
 }
 
