@@ -65,7 +65,14 @@
     
     UITableViewCell *cell =[tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     ProjectApprovalModel *model =self.dataArray[indexPath.row];
-    cell.textLabel.text =model.TITLE;
+    @try {
+        cell.textLabel.text =model.TITLE;
+
+    } @catch (NSException *exception) {
+        
+    } @finally {
+        
+    }
     
     return cell;
     
