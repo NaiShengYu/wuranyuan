@@ -8,6 +8,13 @@
 
 #import "MonitorViewController.h"
 #import "MonitorCell.h"
+
+#import "ProjectApprovalViewController.h"//项目审批
+#import "EmissionPermitManagementViewController.h"//排污许可证管理
+#import "LettersAndVisitsViewController.h"//信访管理
+#import "DailyManagementViewController.h"//日常监管
+#import "ElectronicPunishmentViewController.h"//电子处罚
+#import "SupervisionAndInspectionViewController.h"//监督检查
 @interface MonitorViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)UITableView *myTable;
 @property (nonatomic,strong)NSMutableArray *dataArray;
@@ -30,7 +37,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.dataArray =[[NSMutableArray alloc]initWithObjects:@"项目审批",@"排污许可证管理",@"信访管理",@"日常监管",@"电子处罚",@"应急预案",@"监督检查",@"其他附件", nil];
+    self.dataArray =[[NSMutableArray alloc]initWithObjects:@"项目审批",@"排污许可证管理",@"信访管理",@"日常监管",@"电子处罚",@"监督检查", nil];
     
     
     [self.view addSubview:self.myTable];
@@ -42,6 +49,7 @@
     return 0.1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    
     return 0.1;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -58,13 +66,60 @@
     }else{
         cell.stateLab.hidden =YES;
         cell.stateLab.text =@"";
-        
     }
     return cell;
 }
 
-
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    switch (indexPath.row) {
+        case 0:
+            {
+                ProjectApprovalViewController *projectVC =[[ProjectApprovalViewController alloc]init];
+                projectVC.souceModel =self.souceModel;
+                [self.navigationController pushViewController:projectVC animated:YES];                
+            }
+            break;
+        case 1:
+        {
+            EmissionPermitManagementViewController *projectVC =[[EmissionPermitManagementViewController alloc]init];
+            projectVC.souceModel =self.souceModel;
+            [self.navigationController pushViewController:projectVC animated:YES];
+        }
+            break;
+        case 2:
+        {
+            LettersAndVisitsViewController *projectVC =[[LettersAndVisitsViewController alloc]init];
+            projectVC.souceModel =self.souceModel;
+            [self.navigationController pushViewController:projectVC animated:YES];
+        }
+            break;
+        case 3:
+        {
+            DailyManagementViewController *projectVC =[[DailyManagementViewController alloc]init];
+            projectVC.souceModel =self.souceModel;
+            [self.navigationController pushViewController:projectVC animated:YES];
+        }
+            break;
+        case 4:
+        {
+            ElectronicPunishmentViewController *projectVC =[[ElectronicPunishmentViewController alloc]init];
+            projectVC.souceModel =self.souceModel;
+            [self.navigationController pushViewController:projectVC animated:YES];
+        }
+            break;
+        case 5:
+        {
+            SupervisionAndInspectionViewController *projectVC =[[SupervisionAndInspectionViewController alloc]init];
+            projectVC.souceModel =self.souceModel;
+            [self.navigationController pushViewController:projectVC animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
+    
+}
 
 #pragma mark --自定义导航栏
 - (void)customNavigationBar{
@@ -73,17 +128,11 @@
     self.navigationController.navigationBar.hidden =NO;
     self.tabBarController.tabBar.hidden =YES;
     
-    UIButton *img =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [img addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    [img setImage:[PubulicObj changeImage:[UIImage imageNamed:@"45"] WithSize:CGSizeMake(18, 18)]
-         forState:UIControlStateNormal];
-    [img setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
-    UIBarButtonItem *left =[[UIBarButtonItem alloc]initWithCustomView:img];
-    left.tintColor =[UIColor lightGrayColor];
-    self.navigationItem.leftBarButtonItem =left;
+    UIBarButtonItem* leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"45"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];    leftBarButtonItem.imageInsets =UIEdgeInsetsMake(0, -10, 0, 10);
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     
 }
-
 - (void)goBack{
     [self.navigationController popViewControllerAnimated:YES];
 }

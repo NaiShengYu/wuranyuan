@@ -68,8 +68,8 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+  
     return self.pageModel.factorModelArray.count;
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -80,9 +80,8 @@
     UILabel *lab =[[UILabel alloc]init];
     lab.numberOfLines =0;
     lab.lineBreakMode =NSLineBreakByWordWrapping;
-    if (self.pageModel.aqiModel !=nil) {
-        lab.text =self.pageModel.aqiModel.Health;
-    }
+    
+    lab.text =self.pageModel.aqiInfoModel.aqiModel.Health;
     lab.font =FontSize(14);
     CGSize size =[lab sizeThatFits:CGSizeMake(screenWigth-25-40, MAXFLOAT)];
     CGFloat H =size.height+35;
@@ -90,6 +89,7 @@
         H=45;
     }
     return H;
+    return 10;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -98,14 +98,9 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     AirEnvironmentHeader *header =[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"AirEnvironmentHeader"];
-    
-    if (self.pageModel.aqiModel !=nil) {
-        header.titleLab.text =self.pageModel.aqiModel.AQILevel;
-        header.PMLab.text =self.pageModel.aqiModel.Health;
-   
-    }
-  
-    
+        header.titleLab.text =self.pageModel.aqiInfoModel.aqiModel.AQILevel;
+        header.PMLab.text =self.pageModel.aqiInfoModel.aqiModel.Health;
+
     return header;
  
 }
@@ -116,13 +111,15 @@
     FactorModel *model =self.pageModel.factorModelArray[indexPath.row];
     cell.titleLab.text =model.name;
     cell.PMLab.text =model.val;
-//    [cell.PMLab mas_remakeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(cell.contentView).offset =5;
-//        make.right.equalTo(cell.contentView).offset =-10;
-//        make.bottom.equalTo(cell.contentView).offset =-5;
-//        make.width.mas_lessThanOrEqualTo(90);
-//    }];
-//    [self.myTable selectRowAtIndexPath:currentIndex animated:NO scrollPosition:UITableViewScrollPositionNone];
+    cell.backLab.hidden =YES;
+    
+    [cell.PMLab mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(cell.contentView).offset =5;
+        make.right.equalTo(cell.contentView).offset =-10;
+        make.bottom.equalTo(cell.contentView).offset =-5;
+        make.width.mas_lessThanOrEqualTo(90);
+    }];
+    [self.myTable selectRowAtIndexPath:currentIndex animated:NO scrollPosition:UITableViewScrollPositionNone];
 
     return cell;
 }
@@ -148,7 +145,7 @@
 #pragma mark --获取站点因子
 - (void)getItemIdWithModel{
     WS(blockSelf);
-    NSString *str =[NSString stringWithFormat:@"%@api/location/GetFactors?id=%@",BASEURL,self.pageModel.Id];
+    NSString *str =[NSString stringWithFormat:@"%@api/location/GetFactors?id=%@",BASEURL,self.pageModel.StationId];
     [AFNetRequest HttpGetCallBack:str Parameters:nil success:^(id responseObject) {
         for (NSDictionary *dic in responseObject) {
             FactorModel *factorModel =[[FactorModel alloc]initWithDic:dic];
@@ -164,7 +161,7 @@
             if ([factorModel.name isEqualToString:@"二氧化硫"]) {
                 factorModel.name =@"SO2";
             }
-            
+
             [blockSelf.pageModel.factorModelArray addObject:factorModel];
             [blockSelf getItemNumWithModel:factorModel];
         }
@@ -180,25 +177,24 @@
 -(void)getItemNumWithModel:(FactorModel *)factModel{
         
     NSString *urlStr =[NSString stringWithFormat:@"%@api/FactorData/GetLastRefFacVals",BASEURL];
-    
+
     NSMutableDictionary *dic =[[NSMutableDictionary alloc]init];
     [dic setObject:factModel.Id forKey:@"facId"];
     [dic setObject:@"0" forKey:@"fromType"];
-    NSArray *arr =@[self.pageModel.Id];
+    NSArray *arr =@[self.pageModel.StationId];
     [dic setObject:arr forKey:@"refIds"];
     WS(blockSelf);
     [AFNetRequest HttpPostCallBack:urlStr Parameters:dic success:^(id responseObject) {
         DLog(@"responseObject===%@",responseObject);
         for (NSDictionary *resurlDic in responseObject) {
             factModel.val =[NSString stringWithFormat:@"%@ ug/m3",resurlDic[@"val"]];
-
         }
         [blockSelf.myTable reloadData];
     } failure:^(NSError *error) {
-        
+
     } isShowHUD:NO];
-    
 }
+
 
 #pragma mark --让cell的横线到最左边
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -218,19 +214,16 @@
 
 #pragma mark --自定义导航栏
 - (void)customNavigationBar{
-    self.title =self.pageModel.name;
+    self.title =self.pageModel.StationName;
     self.automaticallyAdjustsScrollViewInsets =NO;
     self.navigationController.navigationBar.hidden =NO;
     self.tabBarController.tabBar.hidden =YES;
-    
-    UIButton *img =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [img addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    [img setImage:[PubulicObj changeImage:[UIImage imageNamed:@"45"] WithSize:CGSizeMake(18, 18)]
-         forState:UIControlStateNormal];
-    [img setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
-    UIBarButtonItem *left =[[UIBarButtonItem alloc]initWithCustomView:img];
-    left.tintColor =[UIColor lightGrayColor];
-    self.navigationItem.leftBarButtonItem =left;
+
+    UIBarButtonItem* leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"45"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    leftBarButtonItem.imageInsets =UIEdgeInsetsMake(0, -10, 0, 10);
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     
 }
 

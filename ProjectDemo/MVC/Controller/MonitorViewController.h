@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PollutionSouceModel.h"
 
 @interface MonitorViewController : UIViewController
+@property (nonatomic,strong)PollutionSouceModel * souceModel;
 
 @end

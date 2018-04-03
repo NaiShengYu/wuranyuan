@@ -72,14 +72,12 @@
     self.navigationController.navigationBar.hidden =NO;
     self.tabBarController.tabBar.hidden =YES;
     
-    UIButton *img =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [img addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    [img setImage:[PubulicObj changeImage:[UIImage imageNamed:@"45"] WithSize:CGSizeMake(18, 18)]
-         forState:UIControlStateNormal];
-    [img setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
-    UIBarButtonItem *left =[[UIBarButtonItem alloc]initWithCustomView:img];
-    left.tintColor =[UIColor lightGrayColor];
-    self.navigationItem.leftBarButtonItem =left;
+    UIBarButtonItem* leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"45"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    leftBarButtonItem.imageInsets =UIEdgeInsetsMake(0, -10, 0, 10);
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
+    
     UIButton *rightBut =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 50, 18)];
     [rightBut addTarget:self action:@selector(subNewAddress) forControlEvents:UIControlEventTouchUpInside];
     [rightBut setTitle:@"添加" forState:UIControlStateNormal];

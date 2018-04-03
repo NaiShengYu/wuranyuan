@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface PollutionSouceMapViewController : UIViewController
-@property (nonatomic,strong)NSMutableArray *airEnvironmentArray;
+@property (nonatomic,strong)NSMutableArray *pullutionsArray;
 
 @end

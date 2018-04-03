@@ -43,6 +43,7 @@
 		08A506D01FD7B25400AEEBEA /* ProjectDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A506CF1FD7B25400AEEBEA /* ProjectDemoTests.m */; };
 		08A506DB1FD7B25400AEEBEA /* ProjectDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 08A506DA1FD7B25400AEEBEA /* ProjectDemoUITests.m */; };
 		6F62F371CDACEDF0E3C1DAC1 /* libPods-ProjectDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 418A5B750EC2DA361B7FD3E1 /* libPods-ProjectDemo.a */; };
+		C9131415206101170037FAD1 /* PageAQIInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9131414206101170037FAD1 /* PageAQIInfoModel.m */; };
 		C9174947202066F000F29B61 /* HomePageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9174946202066F000F29B61 /* HomePageCell.m */; };
 		C9688A7B20031E19007F6888 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9688A7A20031E19007F6888 /* HomePageViewController.m */; };
 		C9688A7E200324A8007F6888 /* HomePageHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C9688A7D200324A8007F6888 /* HomePageHeader.m */; };
@@ -69,6 +70,30 @@
 		C986A3302016DF56000D9310 /* FactorModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C986A32F2016DF56000D9310 /* FactorModel.m */; };
 		C986A33320171972000D9310 /* AQIInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C986A33220171972000D9310 /* AQIInfoModel.m */; };
 		C986A33620173894000D9310 /* FactorDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C986A33520173894000D9310 /* FactorDataModel.m */; };
+		C9A82679206B665900EB3988 /* PollutionSouceModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9A82678206B665900EB3988 /* PollutionSouceModel.m */; };
+		C9FE48CB206B8B6000D39390 /* PaiKouModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE48CA206B8B6000D39390 /* PaiKouModel.m */; };
+		C9FE4934206C995700D39390 /* YinZiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4933206C995700D39390 /* YinZiModel.m */; };
+		C9FE4937206CB4E600D39390 /* PollutionSourceFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4936206CB4E600D39390 /* PollutionSourceFooter.m */; };
+		C9FE493A206DC8BC00D39390 /* ProjectApprovalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4939206DC8BC00D39390 /* ProjectApprovalViewController.m */; };
+		C9FE493D206DCD9800D39390 /* ProjectApprovalModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE493C206DCD9800D39390 /* ProjectApprovalModel.m */; };
+		C9FE4940206DD80D00D39390 /* EmissionPermitManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE493F206DD80D00D39390 /* EmissionPermitManagementViewController.m */; };
+		C9FE4943206DD8CC00D39390 /* LettersAndVisitsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4942206DD8CC00D39390 /* LettersAndVisitsViewController.m */; };
+		C9FE4946206DDA1B00D39390 /* DailyManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4945206DDA1B00D39390 /* DailyManagementViewController.m */; };
+		C9FE4949206DDA8000D39390 /* ElectronicPunishmentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4948206DDA8000D39390 /* ElectronicPunishmentViewController.m */; };
+		C9FE494F206DDAC100D39390 /* SupervisionAndInspectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE494E206DDAC100D39390 /* SupervisionAndInspectionViewController.m */; };
+		C9FE4955206DE2C400D39390 /* EmissionPermitManagementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4954206DE2C400D39390 /* EmissionPermitManagementModel.m */; };
+		C9FE4958206DE64A00D39390 /* DailyManagementModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE4957206DE64A00D39390 /* DailyManagementModel.m */; };
+		C9FE495B206DE7BA00D39390 /* SupervisionAndInspectionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE495A206DE7BA00D39390 /* SupervisionAndInspectionModel.m */; };
+		C9FE499C2071C1D100D39390 /* EmissionPermitManagementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE499B2071C1D100D39390 /* EmissionPermitManagementCell.m */; };
+		C9FE499F2071C71B00D39390 /* EmissionPermitManagementInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE499E2071C71B00D39390 /* EmissionPermitManagementInfoViewController.m */; };
+		C9FE49A22071CC2100D39390 /* EmissionPermitManagementInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49A12071CC2100D39390 /* EmissionPermitManagementInfoModel.m */; };
+		C9FE49A52071D28400D39390 /* LettersAndVisitsInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49A42071D28400D39390 /* LettersAndVisitsInfoViewController.m */; };
+		C9FE49A82071DE1900D39390 /* LettersAndVisitsInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49A72071DE1900D39390 /* LettersAndVisitsInfoCell.m */; };
+		C9FE49AB2072102600D39390 /* DailyManagementInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49AA2072102600D39390 /* DailyManagementInfoViewController.m */; };
+		C9FE49AE2072107D00D39390 /* DailyManagementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49AD2072107D00D39390 /* DailyManagementCell.m */; };
+		C9FE49B12072216400D39390 /* SupervisionAndInspectionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49B02072216400D39390 /* SupervisionAndInspectionInfoViewController.m */; };
+		C9FE49B42072255D00D39390 /* SupervisionAndInspectionInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49B32072255D00D39390 /* SupervisionAndInspectionInfoCell.m */; };
+		C9FE49B7207229AA00D39390 /* SupervisionAndInspectionInfoHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = C9FE49B6207229AA00D39390 /* SupervisionAndInspectionInfoHeader.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +187,8 @@
 		A8426E6536EE20541B74820B /* Pods-ProjectDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectDemo/Pods-ProjectDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B707F2975F1F40F69885C074 /* Pods-ProjectDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectDemo/Pods-ProjectDemo.release.xcconfig"; sourceTree = "<group>"; };
 		C901BDA41FEA3AE600CC6B4B /* ProjectDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectDemo.entitlements; sourceTree = "<group>"; };
+		C9131413206101170037FAD1 /* PageAQIInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageAQIInfoModel.h; sourceTree = "<group>"; };
+		C9131414206101170037FAD1 /* PageAQIInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageAQIInfoModel.m; sourceTree = "<group>"; };
 		C9174945202066F000F29B61 /* HomePageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageCell.h; sourceTree = "<group>"; };
 		C9174946202066F000F29B61 /* HomePageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomePageCell.m; sourceTree = "<group>"; };
 		C9688A7920031E19007F6888 /* HomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
@@ -215,6 +242,54 @@
 		C986A33420173894000D9310 /* FactorDataModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FactorDataModel.h; sourceTree = "<group>"; };
 		C986A33520173894000D9310 /* FactorDataModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FactorDataModel.m; sourceTree = "<group>"; };
 		C986A33720181FFF000D9310 /* ProjectDemo-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ProjectDemo-Bridging-Header.h"; sourceTree = "<group>"; };
+		C9A82677206B665900EB3988 /* PollutionSouceModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PollutionSouceModel.h; sourceTree = "<group>"; };
+		C9A82678206B665900EB3988 /* PollutionSouceModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PollutionSouceModel.m; sourceTree = "<group>"; };
+		C9FE48C9206B8B6000D39390 /* PaiKouModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaiKouModel.h; sourceTree = "<group>"; };
+		C9FE48CA206B8B6000D39390 /* PaiKouModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaiKouModel.m; sourceTree = "<group>"; };
+		C9FE4932206C995700D39390 /* YinZiModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YinZiModel.h; sourceTree = "<group>"; };
+		C9FE4933206C995700D39390 /* YinZiModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YinZiModel.m; sourceTree = "<group>"; };
+		C9FE4935206CB4E600D39390 /* PollutionSourceFooter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PollutionSourceFooter.h; sourceTree = "<group>"; };
+		C9FE4936206CB4E600D39390 /* PollutionSourceFooter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PollutionSourceFooter.m; sourceTree = "<group>"; };
+		C9FE4938206DC8BC00D39390 /* ProjectApprovalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectApprovalViewController.h; sourceTree = "<group>"; };
+		C9FE4939206DC8BC00D39390 /* ProjectApprovalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectApprovalViewController.m; sourceTree = "<group>"; };
+		C9FE493B206DCD9800D39390 /* ProjectApprovalModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectApprovalModel.h; sourceTree = "<group>"; };
+		C9FE493C206DCD9800D39390 /* ProjectApprovalModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectApprovalModel.m; sourceTree = "<group>"; };
+		C9FE493E206DD80D00D39390 /* EmissionPermitManagementViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmissionPermitManagementViewController.h; sourceTree = "<group>"; };
+		C9FE493F206DD80D00D39390 /* EmissionPermitManagementViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmissionPermitManagementViewController.m; sourceTree = "<group>"; };
+		C9FE4941206DD8CC00D39390 /* LettersAndVisitsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LettersAndVisitsViewController.h; sourceTree = "<group>"; };
+		C9FE4942206DD8CC00D39390 /* LettersAndVisitsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LettersAndVisitsViewController.m; sourceTree = "<group>"; };
+		C9FE4944206DDA1B00D39390 /* DailyManagementViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DailyManagementViewController.h; sourceTree = "<group>"; };
+		C9FE4945206DDA1B00D39390 /* DailyManagementViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DailyManagementViewController.m; sourceTree = "<group>"; };
+		C9FE4947206DDA8000D39390 /* ElectronicPunishmentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ElectronicPunishmentViewController.h; sourceTree = "<group>"; };
+		C9FE4948206DDA8000D39390 /* ElectronicPunishmentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ElectronicPunishmentViewController.m; sourceTree = "<group>"; };
+		C9FE494D206DDAC100D39390 /* SupervisionAndInspectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupervisionAndInspectionViewController.h; sourceTree = "<group>"; };
+		C9FE494E206DDAC100D39390 /* SupervisionAndInspectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupervisionAndInspectionViewController.m; sourceTree = "<group>"; };
+		C9FE4953206DE2C400D39390 /* EmissionPermitManagementModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmissionPermitManagementModel.h; sourceTree = "<group>"; };
+		C9FE4954206DE2C400D39390 /* EmissionPermitManagementModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmissionPermitManagementModel.m; sourceTree = "<group>"; };
+		C9FE4956206DE64A00D39390 /* DailyManagementModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DailyManagementModel.h; sourceTree = "<group>"; };
+		C9FE4957206DE64A00D39390 /* DailyManagementModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DailyManagementModel.m; sourceTree = "<group>"; };
+		C9FE4959206DE7BA00D39390 /* SupervisionAndInspectionModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupervisionAndInspectionModel.h; sourceTree = "<group>"; };
+		C9FE495A206DE7BA00D39390 /* SupervisionAndInspectionModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupervisionAndInspectionModel.m; sourceTree = "<group>"; };
+		C9FE499A2071C1D100D39390 /* EmissionPermitManagementCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmissionPermitManagementCell.h; sourceTree = "<group>"; };
+		C9FE499B2071C1D100D39390 /* EmissionPermitManagementCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmissionPermitManagementCell.m; sourceTree = "<group>"; };
+		C9FE499D2071C71B00D39390 /* EmissionPermitManagementInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmissionPermitManagementInfoViewController.h; sourceTree = "<group>"; };
+		C9FE499E2071C71B00D39390 /* EmissionPermitManagementInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmissionPermitManagementInfoViewController.m; sourceTree = "<group>"; };
+		C9FE49A02071CC2100D39390 /* EmissionPermitManagementInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EmissionPermitManagementInfoModel.h; sourceTree = "<group>"; };
+		C9FE49A12071CC2100D39390 /* EmissionPermitManagementInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EmissionPermitManagementInfoModel.m; sourceTree = "<group>"; };
+		C9FE49A32071D28400D39390 /* LettersAndVisitsInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LettersAndVisitsInfoViewController.h; sourceTree = "<group>"; };
+		C9FE49A42071D28400D39390 /* LettersAndVisitsInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LettersAndVisitsInfoViewController.m; sourceTree = "<group>"; };
+		C9FE49A62071DE1900D39390 /* LettersAndVisitsInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LettersAndVisitsInfoCell.h; sourceTree = "<group>"; };
+		C9FE49A72071DE1900D39390 /* LettersAndVisitsInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LettersAndVisitsInfoCell.m; sourceTree = "<group>"; };
+		C9FE49A92072102600D39390 /* DailyManagementInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DailyManagementInfoViewController.h; sourceTree = "<group>"; };
+		C9FE49AA2072102600D39390 /* DailyManagementInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DailyManagementInfoViewController.m; sourceTree = "<group>"; };
+		C9FE49AC2072107D00D39390 /* DailyManagementCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DailyManagementCell.h; sourceTree = "<group>"; };
+		C9FE49AD2072107D00D39390 /* DailyManagementCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DailyManagementCell.m; sourceTree = "<group>"; };
+		C9FE49AF2072216400D39390 /* SupervisionAndInspectionInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupervisionAndInspectionInfoViewController.h; sourceTree = "<group>"; };
+		C9FE49B02072216400D39390 /* SupervisionAndInspectionInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupervisionAndInspectionInfoViewController.m; sourceTree = "<group>"; };
+		C9FE49B22072255D00D39390 /* SupervisionAndInspectionInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupervisionAndInspectionInfoCell.h; sourceTree = "<group>"; };
+		C9FE49B32072255D00D39390 /* SupervisionAndInspectionInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupervisionAndInspectionInfoCell.m; sourceTree = "<group>"; };
+		C9FE49B5207229AA00D39390 /* SupervisionAndInspectionInfoHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SupervisionAndInspectionInfoHeader.h; sourceTree = "<group>"; };
+		C9FE49B6207229AA00D39390 /* SupervisionAndInspectionInfoHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SupervisionAndInspectionInfoHeader.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -417,6 +492,26 @@
 				C96922A72048F72E00D01A65 /* PollutionSouceMapViewController.m */,
 				C96922A02048E97100D01A65 /* MonitorViewController.h */,
 				C96922A12048E97100D01A65 /* MonitorViewController.m */,
+				C9FE4938206DC8BC00D39390 /* ProjectApprovalViewController.h */,
+				C9FE4939206DC8BC00D39390 /* ProjectApprovalViewController.m */,
+				C9FE493E206DD80D00D39390 /* EmissionPermitManagementViewController.h */,
+				C9FE493F206DD80D00D39390 /* EmissionPermitManagementViewController.m */,
+				C9FE499D2071C71B00D39390 /* EmissionPermitManagementInfoViewController.h */,
+				C9FE499E2071C71B00D39390 /* EmissionPermitManagementInfoViewController.m */,
+				C9FE4941206DD8CC00D39390 /* LettersAndVisitsViewController.h */,
+				C9FE4942206DD8CC00D39390 /* LettersAndVisitsViewController.m */,
+				C9FE49A32071D28400D39390 /* LettersAndVisitsInfoViewController.h */,
+				C9FE49A42071D28400D39390 /* LettersAndVisitsInfoViewController.m */,
+				C9FE4944206DDA1B00D39390 /* DailyManagementViewController.h */,
+				C9FE4945206DDA1B00D39390 /* DailyManagementViewController.m */,
+				C9FE49A92072102600D39390 /* DailyManagementInfoViewController.h */,
+				C9FE49AA2072102600D39390 /* DailyManagementInfoViewController.m */,
+				C9FE4947206DDA8000D39390 /* ElectronicPunishmentViewController.h */,
+				C9FE4948206DDA8000D39390 /* ElectronicPunishmentViewController.m */,
+				C9FE494D206DDAC100D39390 /* SupervisionAndInspectionViewController.h */,
+				C9FE494E206DDAC100D39390 /* SupervisionAndInspectionViewController.m */,
+				C9FE49AF2072216400D39390 /* SupervisionAndInspectionInfoViewController.h */,
+				C9FE49B02072216400D39390 /* SupervisionAndInspectionInfoViewController.m */,
 				C986A33720181FFF000D9310 /* ProjectDemo-Bridging-Header.h */,
 			);
 			path = Controller;
@@ -429,10 +524,28 @@
 				C9688AA42005E23A007F6888 /* PagedListModel.m */,
 				C986A32E2016DF56000D9310 /* FactorModel.h */,
 				C986A32F2016DF56000D9310 /* FactorModel.m */,
+				C9131413206101170037FAD1 /* PageAQIInfoModel.h */,
+				C9131414206101170037FAD1 /* PageAQIInfoModel.m */,
 				C986A33120171972000D9310 /* AQIInfoModel.h */,
 				C986A33220171972000D9310 /* AQIInfoModel.m */,
 				C986A33420173894000D9310 /* FactorDataModel.h */,
 				C986A33520173894000D9310 /* FactorDataModel.m */,
+				C9A82677206B665900EB3988 /* PollutionSouceModel.h */,
+				C9A82678206B665900EB3988 /* PollutionSouceModel.m */,
+				C9FE48C9206B8B6000D39390 /* PaiKouModel.h */,
+				C9FE48CA206B8B6000D39390 /* PaiKouModel.m */,
+				C9FE4932206C995700D39390 /* YinZiModel.h */,
+				C9FE4933206C995700D39390 /* YinZiModel.m */,
+				C9FE493B206DCD9800D39390 /* ProjectApprovalModel.h */,
+				C9FE493C206DCD9800D39390 /* ProjectApprovalModel.m */,
+				C9FE4953206DE2C400D39390 /* EmissionPermitManagementModel.h */,
+				C9FE4954206DE2C400D39390 /* EmissionPermitManagementModel.m */,
+				C9FE49A02071CC2100D39390 /* EmissionPermitManagementInfoModel.h */,
+				C9FE49A12071CC2100D39390 /* EmissionPermitManagementInfoModel.m */,
+				C9FE4956206DE64A00D39390 /* DailyManagementModel.h */,
+				C9FE4957206DE64A00D39390 /* DailyManagementModel.m */,
+				C9FE4959206DE7BA00D39390 /* SupervisionAndInspectionModel.h */,
+				C9FE495A206DE7BA00D39390 /* SupervisionAndInspectionModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -458,10 +571,22 @@
 				C9688A9B2004713C007F6888 /* PollutionSourceCell.m */,
 				C9688AA020048D4A007F6888 /* PollutionSourceHeader.h */,
 				C9688AA120048D4A007F6888 /* PollutionSourceHeader.m */,
+				C9FE4935206CB4E600D39390 /* PollutionSourceFooter.h */,
+				C9FE4936206CB4E600D39390 /* PollutionSourceFooter.m */,
 				C96922A32048EE6900D01A65 /* MonitorCell.h */,
 				C96922A42048EE6900D01A65 /* MonitorCell.m */,
 				C9688AB9200852A4007F6888 /* CustomeSearchView.h */,
 				C9688ABA200852A4007F6888 /* CustomeSearchView.m */,
+				C9FE499A2071C1D100D39390 /* EmissionPermitManagementCell.h */,
+				C9FE499B2071C1D100D39390 /* EmissionPermitManagementCell.m */,
+				C9FE49A62071DE1900D39390 /* LettersAndVisitsInfoCell.h */,
+				C9FE49A72071DE1900D39390 /* LettersAndVisitsInfoCell.m */,
+				C9FE49AC2072107D00D39390 /* DailyManagementCell.h */,
+				C9FE49AD2072107D00D39390 /* DailyManagementCell.m */,
+				C9FE49B22072255D00D39390 /* SupervisionAndInspectionInfoCell.h */,
+				C9FE49B32072255D00D39390 /* SupervisionAndInspectionInfoCell.m */,
+				C9FE49B5207229AA00D39390 /* SupervisionAndInspectionInfoHeader.h */,
+				C9FE49B6207229AA00D39390 /* SupervisionAndInspectionInfoHeader.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -699,43 +824,68 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9FE49B12072216400D39390 /* SupervisionAndInspectionInfoViewController.m in Sources */,
+				C9FE494F206DDAC100D39390 /* SupervisionAndInspectionViewController.m in Sources */,
+				C9FE49B42072255D00D39390 /* SupervisionAndInspectionInfoCell.m in Sources */,
+				C9FE493D206DCD9800D39390 /* ProjectApprovalModel.m in Sources */,
 				C986A33620173894000D9310 /* FactorDataModel.m in Sources */,
 				08916CD41FE795FB00AFA397 /* JFLocation.h in Sources */,
 				C96922A52048EE6900D01A65 /* MonitorCell.m in Sources */,
 				C986A33320171972000D9310 /* AQIInfoModel.m in Sources */,
 				08916CD51FE795FB00AFA397 /* JFLocation.m in Sources */,
 				C9688A8120033A22007F6888 /* AirEnvironmentViewController.m in Sources */,
+				C9FE49B7207229AA00D39390 /* SupervisionAndInspectionInfoHeader.m in Sources */,
 				C96922A22048E97100D01A65 /* MonitorViewController.m in Sources */,
 				C9688A87200345B7007F6888 /* AirEnVironmentInfoViewController.m in Sources */,
 				C9688A7B20031E19007F6888 /* HomePageViewController.m in Sources */,
 				0860F9D01FE11A8F006FE96B /* AFNetRequest.m in Sources */,
+				C9131415206101170037FAD1 /* PageAQIInfoModel.m in Sources */,
+				C9FE495B206DE7BA00D39390 /* SupervisionAndInspectionModel.m in Sources */,
 				C9688A8D20035417007F6888 /* AirEnvironmentFooter.m in Sources */,
 				C9688A9C2004713C007F6888 /* PollutionSourceCell.m in Sources */,
 				0860F9C71FE10CE2006FE96B /* YFScaleScrollViewView.m in Sources */,
 				C9691FB9203FEFA200D01A65 /* LineChartView.m in Sources */,
 				0860F9C61FE10CDB006FE96B /* YFScaleScrollViewView.h in Sources */,
+				C9FE4937206CB4E600D39390 /* PollutionSourceFooter.m in Sources */,
 				0860F9D31FE11C9A006FE96B /* CustomAccount.m in Sources */,
 				0860F9BC1FE10BAF006FE96B /* YFScrollView.m in Sources */,
+				C9FE4943206DD8CC00D39390 /* LettersAndVisitsViewController.m in Sources */,
 				0860F9BB1FE10BA9006FE96B /* YFScrollView.h in Sources */,
+				C9FE49AE2072107D00D39390 /* DailyManagementCell.m in Sources */,
 				08996D451FDA45C1006B8A20 /* PubulicObj.m in Sources */,
 				C9688A7E200324A8007F6888 /* HomePageHeader.m in Sources */,
 				C9688A8420033D97007F6888 /* AirEnvironmentCell.m in Sources */,
+				C9FE4949206DDA8000D39390 /* ElectronicPunishmentViewController.m in Sources */,
 				08996D441FDA45BC006B8A20 /* PubulicObj.h in Sources */,
 				C9688A99200470B7007F6888 /* PollutionSourceViewController.m in Sources */,
 				C9688AA82005E77B007F6888 /* SiteListViewController.m in Sources */,
 				C9688A8A20034A5C007F6888 /* AirEnvironmentHeader.m in Sources */,
 				08A506BB1FD7B25400AEEBEA /* ViewController.m in Sources */,
 				C976790A203148B20020B55C /* AirEnvironmentListHeader.m in Sources */,
+				C9FE48CB206B8B6000D39390 /* PaiKouModel.m in Sources */,
+				C9FE4940206DD80D00D39390 /* EmissionPermitManagementViewController.m in Sources */,
+				C9FE49A52071D28400D39390 /* LettersAndVisitsInfoViewController.m in Sources */,
+				C9A82679206B665900EB3988 /* PollutionSouceModel.m in Sources */,
 				C9688ABB200852A5007F6888 /* CustomeSearchView.m in Sources */,
 				C9688AA52005E23A007F6888 /* PagedListModel.m in Sources */,
+				C9FE4946206DDA1B00D39390 /* DailyManagementViewController.m in Sources */,
 				C986A3302016DF56000D9310 /* FactorModel.m in Sources */,
+				C9FE4955206DE2C400D39390 /* EmissionPermitManagementModel.m in Sources */,
 				C9688AAB2005F9A7007F6888 /* EditSiteViewController.m in Sources */,
+				C9FE499C2071C1D100D39390 /* EmissionPermitManagementCell.m in Sources */,
 				C9174947202066F000F29B61 /* HomePageCell.m in Sources */,
+				C9FE493A206DC8BC00D39390 /* ProjectApprovalViewController.m in Sources */,
 				C9688A9F20048CE0007F6888 /* PollutionSouceInfoViewController.m in Sources */,
+				C9FE49A22071CC2100D39390 /* EmissionPermitManagementInfoModel.m in Sources */,
+				C9FE499F2071C71B00D39390 /* EmissionPermitManagementInfoViewController.m in Sources */,
 				C9688AA220048D4A007F6888 /* PollutionSourceHeader.m in Sources */,
 				C9688A9320045D49007F6888 /* MapAnnotationView.m in Sources */,
+				C9FE4958206DE64A00D39390 /* DailyManagementModel.m in Sources */,
+				C9FE49AB2072102600D39390 /* DailyManagementInfoViewController.m in Sources */,
 				08A506C61FD7B25400AEEBEA /* main.m in Sources */,
+				C9FE49A82071DE1900D39390 /* LettersAndVisitsInfoCell.m in Sources */,
 				08A506B81FD7B25400AEEBEA /* AppDelegate.m in Sources */,
+				C9FE4934206C995700D39390 /* YinZiModel.m in Sources */,
 				C9688A9020044C85007F6888 /* MapViewController.m in Sources */,
 				C96922A82048F72E00D01A65 /* PollutionSouceMapViewController.m in Sources */,
 			);
@@ -977,7 +1127,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "ProjectDemo/MVC/Controller/ProjectDemo-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1061,7 +1211,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProjectDemo/MVC/Controller/ProjectDemo-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

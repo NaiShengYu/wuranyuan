@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PagedListModel.h"
 @interface AirEnvironmentCell : UITableViewCell
 //标题
 @property (nonatomic,strong)UILabel *titleLab;
@@ -17,5 +17,9 @@
 @property (nonatomic,strong)UILabel *backLab;
 //排名
 @property (nonatomic,strong)UILabel *numLab;
+
+@property (nonatomic,assign)BOOL isAQI;
+
+@property (nonatomic,strong)PagedListModel *listModel;
 
 @end

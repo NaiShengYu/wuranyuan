@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PollutionSouceModel.h"
 @interface PollutionSouceInfoViewController : UIViewController
 
+@property (nonatomic,strong)PollutionSouceModel * souceModel;
 @end

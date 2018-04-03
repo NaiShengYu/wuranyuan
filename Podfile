@@ -11,4 +11,6 @@ pod 'MMDrawerController’
 pod 'TZImagePickerController', '~> 1.9.6'
 pod “BaiduMapKit” #百度地图SDK
 pod 'ReactiveObjC', '~> 3.0.0’
+pod 'DZNEmptyDataSet'
+
 end

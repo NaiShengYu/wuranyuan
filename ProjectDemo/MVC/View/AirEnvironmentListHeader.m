@@ -75,7 +75,6 @@
         _contaminantNameLab.textAlignment =NSTextAlignmentCenter;
         _contaminantNameLab.font =FontSize(screenWigth==320?15:17);
         
-        
     }
     
     return self;

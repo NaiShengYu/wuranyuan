@@ -9,14 +9,18 @@
 #import <UIKit/UIKit.h>
 
 @interface PollutionSourceHeader : UITableViewHeaderFooterView
-//标题
-@property (nonatomic,strong)UILabel *titleLab;
+////标题
+//@property (nonatomic,strong)UILabel *titleLab;
+//
+////企业详情介绍
+//@property (nonatomic,strong)UILabel *infoLab;
+//
+////360监控按钮
 
-//企业详情介绍
-@property (nonatomic,strong)UILabel *infoLab;
+//@property (nonatomic,strong)UIButton *but;
 
-//360监控按钮
-@property (nonatomic,strong)UIButton *but;
 
+//排口名称
+@property (nonatomic,strong)UILabel *name;
 
 @end

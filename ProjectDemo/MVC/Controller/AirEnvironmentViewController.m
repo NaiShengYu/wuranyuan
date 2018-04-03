@@ -19,7 +19,11 @@
 
 @property (nonatomic,strong)UITableView *myTable;
 
-@property (nonatomic,strong)NSMutableArray *dataArray;
+@property (nonatomic,strong)NSMutableArray *currentArray;
+@property (nonatomic,strong)NSMutableArray *haveDataArray;
+@property (nonatomic,strong)NSMutableArray *currentHaveDataArray;
+@property (nonatomic,strong)NSMutableArray *noDataArray;
+@property (nonatomic,strong)NSMutableArray *currentNoDataArray;
 
 @property (nonatomic,strong)NSString *searchKey;
 
@@ -49,13 +53,18 @@
     [super viewDidLoad];
     self.view.backgroundColor =[UIColor whiteColor];
     self.searchKey =@"";
-    self.dataArray =[[NSMutableArray alloc]init];
-  
+    self.currentArray =[[NSMutableArray alloc]init];
+    self.haveDataArray =[[NSMutableArray alloc]init];
+    self.noDataArray =[[NSMutableArray alloc]init];
+    self.currentNoDataArray =[[NSMutableArray alloc]init];
+    self.currentHaveDataArray =[[NSMutableArray alloc]init];
+
+    
     [self.view addSubview:self.myTable];
     [self customNavigationBar];
     [self creatSearchView];
     [self creatBottomBut];
-    [self makeData];
+    [self makeData2];
 }
 
 - (void)creatBottomBut{
@@ -105,36 +114,42 @@
         
         //这里类似KVO的读取属性的方法，直接从字符串读取对象属性，注意不要写错
         NSSortDescriptor *sortDescriptor1 = [NSSortDescriptor sortDescriptorWithKey:@"AQI" ascending:NO];
-        NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"Id" ascending:NO];
+        NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"StationId" ascending:NO];
 
         //这个数组保存的是排序好的对象
-        self.dataArray= [self.dataArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:sortDescriptor1,sortDescriptor2, nil]];
+        NSArray *arr = (NSMutableArray *)[self.currentHaveDataArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:sortDescriptor1,sortDescriptor2, nil]];
+        self.currentHaveDataArray =[[NSMutableArray alloc]initWithArray:arr];
 //        [self.dataArray sortUsingDescriptors:@[sortDescriptor1,sortDescriptor2]];
 
-        [self.myTable reloadData];
         
     }
     if (but ==self.pmBut) {
         self.aqiBut.selected =NO;
         //这里类似KVO的读取属性的方法，直接从字符串读取对象属性，注意不要写错
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"ceshi" ascending:NO];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"PM25" ascending:NO];
+        NSSortDescriptor *sortDescriptor2 = [NSSortDescriptor sortDescriptorWithKey:@"StationId" ascending:NO];
+
         //这个数组保存的是排序好的对象
-       self.dataArray= [self.dataArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-        [self.myTable reloadData];
+       NSArray *arr= (NSMutableArray *)[self.currentHaveDataArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:sortDescriptor,sortDescriptor2, nil]];
+        self.currentHaveDataArray =[[NSMutableArray alloc]initWithArray:arr];
 
-        
-        
-        
     }
+    [self.currentArray removeAllObjects];
+    for (PagedListModel *model in self.currentHaveDataArray) {
+        [self.currentArray addObject:model];
+    }
+    for (PagedListModel *model in self.currentNoDataArray) {
+        [self.currentArray addObject:model];
+    }
+    [self.myTable reloadData];
     but.selected =!but.selected;
-
     
 }
 
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.dataArray.count;
+    return self.currentArray.count;
  
 }
 
@@ -149,20 +164,19 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     AirEnvironmentListHeader * header =[tableView dequeueReusableHeaderFooterViewWithIdentifier:@"AirEnvironmentListHeader"];
-  
+    if (self.aqiBut.selected) {
+        header.AQINumLab.text =@"AQI(ug/m3)";
+    }else{
+        header.AQINumLab.text =@"PM2.5(ug/m3)";
+    }
     return header;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     AirEnvironmentCell *cell =[tableView dequeueReusableCellWithIdentifier:@"AirEnvironmentCell" forIndexPath:indexPath];
-    PagedListModel *model =self.dataArray[indexPath.row];
+    PagedListModel *model =self.currentArray[indexPath.row];
     cell.numLab.text =[NSString stringWithFormat:@"第%ld",indexPath.row+1];
-    cell.titleLab.text =model.name;
-    if (model.aqiModel !=nil) {
-        cell.PMLab.text =[NSString stringWithFormat:@"%.f",model.AQI];
-//        cell.PMLab.text =[NSString stringWithFormat:@"%@",model.ceshi];
-
-    }
-    cell.backLab.hidden =NO;
+    cell.isAQI =self.aqiBut.selected;
+    cell.listModel =model;
     return cell;
 }
 
@@ -170,9 +184,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    PagedListModel *model =self.currentArray[indexPath.row];
+    if (model.aqiInfoModel ==nil) {
+        return;
+    }
     AirEnVironmentInfoViewController *airInfoVC =[[AirEnVironmentInfoViewController alloc]init];
-    PagedListModel *model =self.dataArray[indexPath.row];
-
+    
     airInfoVC.pageModel =model;
     
     [self.navigationController pushViewController:airInfoVC animated:YES];
@@ -248,14 +265,11 @@
     self.navigationController.navigationBar.hidden =NO;
     self.tabBarController.tabBar.hidden =YES;
     
-    UIButton *img =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [img addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    [img setImage:[PubulicObj changeImage:[UIImage imageNamed:@"45"] WithSize:CGSizeMake(18, 18)]
-         forState:UIControlStateNormal];
-    [img setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
-    UIBarButtonItem *left =[[UIBarButtonItem alloc]initWithCustomView:img];
-    left.tintColor =[UIColor lightGrayColor];
-    self.navigationItem.leftBarButtonItem =left;
+    UIBarButtonItem* leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"45"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    leftBarButtonItem.imageInsets =UIEdgeInsetsMake(0, -10, 0, 10);
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     
     UIButton *rightBut =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
     [rightBut addTarget:self action:@selector(goMap) forControlEvents:UIControlEventTouchUpInside];
@@ -270,9 +284,8 @@
 
 - (void)goMap{
     MapViewController *mapVC =[[MapViewController alloc]init];
-    mapVC.airEnvironmentArray =self.dataArray;
+    mapVC.airEnvironmentArray =self.haveDataArray;
     [self.navigationController pushViewController:mapVC animated:YES];
-
 }
 
 - (void)goBack{
@@ -280,83 +293,63 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
-#pragma mark 获取站点
-- (void)makeData{
+- (void)makeData2{
     
-    NSString *urlStr =[NSString stringWithFormat:@"%@api/location/PagedList",BASEURL];
-    NSMutableDictionary *dic =[[NSMutableDictionary alloc]init];
-    [dic setObject:self.searchKey forKey:@"searchKey"];
-    [dic setObject:@"0" forKey:@"pageIndex"];
-    [dic setObject:@"3" forKey:@"type"];
-    [dic setObject:@"3" forKey:@"subType"];
     WS(blockSelf);
-    
-    [AFNetRequest HttpPostCallBack:urlStr Parameters:dic success:^(id responseObject) {
-        DLog(@"responseObject===%@",responseObject);
-        [blockSelf.dataArray removeAllObjects];
-        for (NSDictionary *items in responseObject[@"Items"]) {
-            PagedListModel *model =[[PagedListModel alloc]initWithDic:items];
-            [blockSelf.dataArray addObject:model];
-        }
-        [blockSelf getAQI];
+    NSString *urlStr =@"api/FactorData/GetLastAQIValsForPhone";
+    [AFNetRequest HttpGetCallBack:urlStr Parameters:nil success:^(id responseObject) {
+        NSLog(@"%@",responseObject);
+        for (NSDictionary *dic in responseObject) {
+            PagedListModel *listModel =[[PagedListModel alloc]initWithDic:dic];
+            if (![dic[@"info"] isEqual:[NSNull null]]) {
+                listModel.AQI =[listModel.aqiInfoModel.AQI floatValue];
+                listModel.PM25 =[listModel.aqiInfoModel.PM25 floatValue];
+                [blockSelf.haveDataArray addObject:listModel];
+                [blockSelf.currentHaveDataArray addObject:listModel];
 
-        [blockSelf.myTable reloadData];
+            }else{
+                [blockSelf.noDataArray addObject:listModel];
+                [blockSelf.currentNoDataArray addObject:listModel];
+            }
+        }
+        [blockSelf changeSelect:blockSelf.aqiBut];
         
     } failure:^(NSError *error) {
         
     } isShowHUD:YES];
+
 }
 
-#pragma mark --获取站点aqi最新值
-- (void)getAQI{
-    
-    NSString *urlStr =[NSString stringWithFormat:@"%@api/FactorData/GetLastRefAQIVals",BASEURL];
-    
-    
-    NSMutableArray *refIDs =[[NSMutableArray alloc]init];
-    for (PagedListModel *model in self.dataArray) {
-        [refIDs addObject:model.Id];
-    }
-    NSMutableDictionary *dic =[[NSMutableDictionary alloc]init];
-    [dic setObject:refIDs forKey:@"refIds"];
-    [dic setObject:@"0" forKey:@"fromType"];
-    WS(blockSelf);
-    [AFNetRequest HttpPostCallBack:urlStr Parameters:dic success:^(id responseObject) {
-        DLog(@"responseObject===%@",responseObject);
-        for (int i =0 ;i <blockSelf.dataArray.count; i ++) {
-            PagedListModel *pageModel =blockSelf.dataArray[i];
-
-            AQIInfoModel *model;
-            NSDictionary *resultDic =responseObject[i];
-            
-            if(![resultDic[@"info"] isEqual:[NSNull null]]){
-                model =[[AQIInfoModel alloc]initWithDic:resultDic[@"info"][@"AQIInfo"]];
-                NSString *aqistr =resultDic[@"info"][@"AQIInfo"][@"AQI"];
-                pageModel.AQI =[aqistr floatValue];
-                pageModel.AQILevel =resultDic[@"info"][@"AQIInfo"][@"AQILevel"];
-                pageModel.Health =resultDic[@"info"][@"AQIInfo"][@"Health"];
-
-            }else {
-                model =[[AQIInfoModel alloc]init];
-                model.AQI =@"0";
-                
-            }
-//            pageModel.ceshi =[NSString stringWithFormat:@"%d",arc4random()%100];
-            DLog(@"pageModel==%f",pageModel.AQI);
-            pageModel.aqiModel =model;
-  
+#pragma mark --获取搜索结果
+- (void)makeData{
+    NSLog(@"%@",self.searchKey);
+    [self.currentHaveDataArray removeAllObjects];
+ 
+    for (PagedListModel *listModel in self.haveDataArray) {
+        if (self.searchKey.length ==0 ||self.searchKey ==nil) {
+            [self.currentHaveDataArray addObject:listModel];
         }
-        [blockSelf changeSelect:blockSelf.aqiBut];
-
-       
-    } failure:^(NSError *error) {
-        
-    } isShowHUD:NO];
-
+        if ([listModel.StationName containsString:self.searchKey]) {
+            [self.currentHaveDataArray addObject:listModel];
+        }
+    }
+    [self.currentNoDataArray removeAllObjects];
+    for (PagedListModel *listModel in self.noDataArray) {
+        if (self.searchKey.length ==0 ||self.searchKey ==nil) {
+            [self.currentNoDataArray addObject:listModel];
+        }
+        if ([listModel.StationName containsString:self.searchKey]) {
+            [self.currentNoDataArray addObject:listModel];
+        }
+    }
+    if (self.aqiBut.selected) {
+        self.aqiBut.selected =NO;
+        [self changeSelect:self.aqiBut];
+    }else{
+        self.pmBut.selected =NO;
+        [self changeSelect:self.pmBut];
+    }
     
 }
-
-
 
 @end

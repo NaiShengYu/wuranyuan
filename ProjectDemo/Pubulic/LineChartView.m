@@ -36,7 +36,7 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self =[super initWithFrame:frame];
     if (self) {
-        self.backgroundColor =[UIColor blackColor];
+        self.backgroundColor =[UIColor groupTableViewBackgroundColor];
         self.toplimit =1;
   
     }
@@ -137,33 +137,20 @@
     CGFloat alltime = self.xArray.count ==30? 60*60*24*30:60*60*24;
     NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
     formatter.dateFormat =self.xArray.count ==30? @"yyyy-MM-dd":@"yyyy-MM-dd HH";
-    NSString* nowString =[formatter stringFromDate:[NSDate date]];
+   
+    NSString* nowString =self.xArray.count ==30?@"2017-09-11":@"2017-09-11 19";//假时间，要注释
+   
+//    NSString* nowString =[formatter stringFromDate:[NSDate date]];
     NSDate *nowdate =[PubulicObj getNowDateWithDate:[formatter dateFromString:nowString]];
     
     
-    //上限虚线
-    CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
-    CGContextMoveToPoint(context, leftDistance, viewHeight-bottomeDistance-20-90);
-    CGContextAddLineToPoint(context, viewWight-10, viewHeight-bottomeDistance-20-90);
-    //设置虚线排列的宽度间隔，下面的arr中的数字表示先绘制先绘制1个点在绘制1个点
-    CGFloat arr[]={4,1};
-    //最后一个“1”表示排列的个数
-    CGContextSetLineDash(context, 0, arr, 1);
-    CGContextDrawPath(context, kCGPathStroke);
-    
-    //上限虚线
-    CGContextMoveToPoint(context, leftDistance, viewHeight-bottomeDistance-20-60);
-    CGContextAddLineToPoint(context, viewWight-10, viewHeight-bottomeDistance-20-60);
-    //设置虚线排列的宽度间隔，下面的arr中的数字表示先绘制先绘制1个点在绘制1个点
-    //最后一个“1”表示排列的个数
-    CGContextSetLineDash(context, 0, arr, 1);
-    CGContextDrawPath(context, kCGPathStroke);
-    
+
     
     
     
     //具体数据
     CGContextSetStrokeColorWithColor(context, myColor.CGColor);
+    self.dataArray = (NSMutableArray *)[[self.dataArray reverseObjectEnumerator] allObjects];
     if (self.dataArray.count >0) {
         for (int i =0; i <self.dataArray.count ; i ++) {
             if (i <self.dataArray.count-1) {
@@ -179,18 +166,39 @@
                 NSTimeInterval time1 = [nowdate timeIntervalSinceDate:date1];
                 NSTimeInterval startTime =self.xArray.count ==30? (time0+60*60*24):time0+60*60;
                 NSTimeInterval endTime =self.xArray.count ==30? (time1+60*60*24):time1+60*60;
+             
+                CGFloat X0 =leftDistance+30.0 +(1-startTime/alltime)*xAllWight;
+                CGFloat Y0 =viewHeight-([yData0 floatValue]/self.toplimit*yAllHeight)-bottomeDistance-20;
+                CGFloat X1 =leftDistance+30.0 +(1-endTime/alltime)*xAllWight;
+                CGFloat Y1 =viewHeight-([yData1 floatValue]/self.toplimit*yAllHeight)-bottomeDistance-20;
                 
                 CGContextMoveToPoint(context, leftDistance+30.0 +(1-startTime/alltime)*xAllWight, viewHeight-([yData0 floatValue]/self.toplimit*yAllHeight)-bottomeDistance-20);
                 
                 CGContextAddLineToPoint(context, leftDistance+30.0 +(1-endTime/alltime)*xAllWight, viewHeight-([yData1 floatValue]/self.toplimit*yAllHeight)-bottomeDistance-20);
                 CGContextStrokePath(context);
-    
 
             }
         }
   
     }
     
+        //上限虚线
+        CGContextSetStrokeColorWithColor(context, [UIColor redColor].CGColor);
+        CGContextMoveToPoint(context, leftDistance, viewHeight-bottomeDistance-20-90);
+        CGContextAddLineToPoint(context, viewWight-10, viewHeight-bottomeDistance-20-90);
+        //设置虚线排列的宽度间隔，下面的arr中的数字表示先绘制先绘制1个点在绘制1个点
+        CGFloat arr[]={4,1};
+        //最后一个“1”表示排列的个数
+        CGContextSetLineDash(context, 0, arr, 1);
+        CGContextDrawPath(context, kCGPathStroke);
+    
+        //上限虚线
+        CGContextMoveToPoint(context, leftDistance, viewHeight-bottomeDistance-20-60);
+        CGContextAddLineToPoint(context, viewWight-10, viewHeight-bottomeDistance-20-60);
+        //设置虚线排列的宽度间隔，下面的arr中的数字表示先绘制先绘制1个点在绘制1个点
+        //最后一个“1”表示排列的个数
+        CGContextSetLineDash(context, 0, arr, 1);
+        CGContextDrawPath(context, kCGPathStroke);
     
     
     

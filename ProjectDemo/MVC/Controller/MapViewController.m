@@ -67,11 +67,10 @@
     for (NSInteger i =0; i <self.airEnvironmentArray.count; i ++) {
         PagedListModel *model =self.airEnvironmentArray[i];
         BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
-        annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
-        DLog(@"%@",model.aqiModel.AQI);
-        annotation.title =[NSString stringWithFormat:@"%@",model.aqiModel.AQI];
+        annotation.coordinate =CLLocationCoordinate2DMake([model.StationLat floatValue], [model.StationLng floatValue]);
+        annotation.title =[NSString stringWithFormat:@"%@",model.aqiInfoModel.AQI];
         [_annotationArray addObject:annotation];
-       
+
     }
     [self.mapView addAnnotations:_annotationArray];
 
@@ -113,8 +112,6 @@
         }
         
     }
-  
-    
 }
 - (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id<BMKAnnotation>)annotation{
     
@@ -150,34 +147,29 @@
     }
     _lastBut.backgroundColor =RGBA(55, 150, 230, 1);
     but.backgroundColor =[UIColor grayColor];
-    
-    
+
+
     _lastBut =but;
     FactorModel *model =self.bottomTitleArray [but.tag-2300];
     self.title =[NSString stringWithFormat:@"%@ 分布情况",model.name];
-    
-  
+
+
     if (but.tag >2300) {
-        
-        
+
+
         [self.mapView removeAnnotations:self.annotationArray];
         [self getItemNumWithModel:model];
- 
+
     }else{
-        
-        
         for (NSInteger i =0; i <self.airEnvironmentArray.count; i ++) {
             PagedListModel *model =self.airEnvironmentArray[i];
             BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
-            annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
-            DLog(@"%@",model.aqiModel.AQI);
-            annotation.title =[NSString stringWithFormat:@"%@",model.aqiModel.AQI];
+            annotation.coordinate =CLLocationCoordinate2DMake([model.StationLat floatValue], [model.StationLng floatValue]);
+            DLog(@"%@",model.aqiInfoModel.AQI);
+            annotation.title =[NSString stringWithFormat:@"%@",model.aqiInfoModel.AQI];
             [_annotationArray addObject:annotation];
         }
         [self.mapView addAnnotations:_annotationArray];
-        
-        
-        
     }
   
 }
@@ -213,9 +205,8 @@
     if (self.airEnvironmentArray.count ==0) {
         return;
     }
-    
     PagedListModel *pageModel =self.airEnvironmentArray[0];
-    NSString *str =[NSString stringWithFormat:@"%@api/location/GetFactors?id=%@",BASEURL,pageModel.Id];
+    NSString *str =[NSString stringWithFormat:@"%@api/location/GetFactors?id=%@",BASEURL,pageModel.StationId];
     [AFNetRequest HttpGetCallBack:str Parameters:nil success:^(id responseObject) {
         for (NSDictionary *dic in responseObject) {
             FactorModel *factorModel =[[FactorModel alloc]initWithDic:dic];
@@ -235,63 +226,63 @@
                 [self.bottomTitleArray addObject:factorModel];
             }
         }
-      
+
         [blockSelf creatBottomeBut];
     } failure:^(NSError *error) {
-        
+
     } isShowHUD:YES];
 }
 
 
 #pragma mark --获取因子最新值
 -(void)getItemNumWithModel:(FactorModel *)factModel{
-    
+
     NSString *urlStr =[NSString stringWithFormat:@"%@api/FactorData/GetLastRefFacVals",BASEURL];
-    
+
     NSMutableDictionary *dic =[[NSMutableDictionary alloc]init];
     [dic setObject:factModel.Id forKey:@"facId"];
     [dic setObject:@"0" forKey:@"fromType"];
     NSMutableArray *arr =[[NSMutableArray alloc]init];
     for (PagedListModel *model in self.airEnvironmentArray) {
-        [arr addObject:model.Id];
+        [arr addObject:model.StationId];
     }
-    
+
     [dic setObject:arr forKey:@"refIds"];
     WS(blockSelf);
-    
-    
+
+
     [AFNetRequest HttpPostCallBack:urlStr Parameters:dic success:^(id responseObject) {
         DLog(@"responseObject===%@",responseObject);
         for (PagedListModel *pageModel in blockSelf.airEnvironmentArray) {
             for (NSDictionary *resurlDic in responseObject) {
                 factModel.val =[NSString stringWithFormat:@"%@ ug/m3",resurlDic[@"val"]];
-                if ([resurlDic[@"refId"] isEqualToString:pageModel.Id]) {
+                if ([resurlDic[@"refId"] isEqualToString:pageModel.StationId]) {
                     if ([factModel.name isEqualToString:@"PM2.5"]) {
-                        pageModel.PM25 =resurlDic[@"val"];
+                        pageModel.PM25 =[resurlDic[@"val"] floatValue];
                     }
                     if ([factModel.name isEqualToString:@"PM10"]) {
-                        pageModel.PM10 =resurlDic[@"val"];
+                        pageModel.PM10 =[resurlDic[@"val"] floatValue];
                     }
                     if ([factModel.name isEqualToString:@"O3"]) {
-                        pageModel.O3 =resurlDic[@"val"];
+                        pageModel.O3 =[resurlDic[@"val"] floatValue];
                     }
                     if ([factModel.name isEqualToString:@"CO"]) {
-                        DLog(@"%@,co的值：%@",pageModel.name,resurlDic[@"val"]);
-                        pageModel.CO =resurlDic[@"val"];
+                        DLog(@"%@,co的值：%@",pageModel.StationName,resurlDic[@"val"]);
+                        pageModel.CO =[resurlDic[@"val"] floatValue];
                     }
                 }
             }
-    
+
         }
-        
+
         [blockSelf.mapView removeAnnotations:blockSelf.annotationArray];
         [blockSelf.annotationArray removeAllObjects];
         if ([factModel.name isEqualToString:@"PM2.5"]) {
             for (NSInteger i =0; i <blockSelf.airEnvironmentArray.count; i ++) {
                 PagedListModel *model =blockSelf.airEnvironmentArray[i];
                 BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
-                annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
-                annotation.title =[NSString stringWithFormat:@"%@",model.PM25];
+                annotation.coordinate =CLLocationCoordinate2DMake([model.StationLat floatValue], [model.StationLng floatValue]);
+                annotation.title =[NSString stringWithFormat:@"%.2f",model.PM25];
                 [blockSelf.annotationArray addObject:annotation];
             }
             [blockSelf.mapView addAnnotations:blockSelf.annotationArray];
@@ -300,8 +291,8 @@
             for (NSInteger i =0; i <blockSelf.airEnvironmentArray.count; i ++) {
                 PagedListModel *model =blockSelf.airEnvironmentArray[i];
                 BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
-                annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
-                annotation.title =[NSString stringWithFormat:@"%@",model.PM10];
+                annotation.coordinate =CLLocationCoordinate2DMake([model.StationLat floatValue], [model.StationLng floatValue]);
+                annotation.title =[NSString stringWithFormat:@"%.2f",model.PM10];
                 [blockSelf.annotationArray addObject:annotation];
             }
             [blockSelf.mapView addAnnotations:blockSelf.annotationArray];
@@ -310,8 +301,8 @@
             for (NSInteger i =0; i <blockSelf.airEnvironmentArray.count; i ++) {
                 PagedListModel *model =blockSelf.airEnvironmentArray[i];
                 BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
-                annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
-                annotation.title =[NSString stringWithFormat:@"%@",model.O3];
+                annotation.coordinate =CLLocationCoordinate2DMake([model.StationLat floatValue], [model.StationLng floatValue]);
+                annotation.title =[NSString stringWithFormat:@"%.2f",model.O3];
                 [blockSelf.annotationArray addObject:annotation];
             }
             [blockSelf.mapView addAnnotations:blockSelf.annotationArray];
@@ -320,20 +311,16 @@
             for (NSInteger i =0; i <blockSelf.airEnvironmentArray.count; i ++) {
                 PagedListModel *model =blockSelf.airEnvironmentArray[i];
                 BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
-                annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
-                annotation.title =[NSString stringWithFormat:@"%@",model.CO];
+                annotation.coordinate =CLLocationCoordinate2DMake([model.StationLat floatValue], [model.StationLng floatValue]);
+                annotation.title =[NSString stringWithFormat:@"%.2f",model.CO];
                 [blockSelf.annotationArray addObject:annotation];
             }
             [blockSelf.mapView addAnnotations:blockSelf.annotationArray];
         }
-        
-        
-        
 //        [blockSelf.myTable reloadData];
     } failure:^(NSError *error) {
-        
+
     } isShowHUD:NO];
-    
 }
 
 
@@ -344,19 +331,13 @@
     self.navigationController.navigationBar.hidden =NO;
     self.tabBarController.tabBar.hidden =YES;
     
-    UIButton *img =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [img addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    [img setImage:[PubulicObj changeImage:[UIImage imageNamed:@"45"] WithSize:CGSizeMake(18, 18)]
-         forState:UIControlStateNormal];
-    [img setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
-    UIBarButtonItem *left =[[UIBarButtonItem alloc]initWithCustomView:img];
-    left.tintColor =[UIColor lightGrayColor];
-    self.navigationItem.leftBarButtonItem =left;
-    
+    UIBarButtonItem* leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"45"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    leftBarButtonItem.imageInsets =UIEdgeInsetsMake(0, -10, 0, 10);
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     
 }
-
-
 
 - (void)goBack{
     

@@ -42,11 +42,7 @@
             make.size.mas_equalTo(CGSizeMake(50, 30));
         }];
         _titleLab.adjustsFontSizeToFitWidth =YES;
-        _titleLab.numberOfLines =2;
-        
-        
-   
- 
+        _titleLab.numberOfLines =3;
     }
     
     return self;

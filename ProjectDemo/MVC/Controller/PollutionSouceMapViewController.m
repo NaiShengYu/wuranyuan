@@ -8,8 +8,8 @@
 
 #import "PollutionSouceMapViewController.h"
 #import "MapAnnotationView.h"
-
-#import "PagedListModel.h"
+#import "PollutionSouceInfoViewController.h"
+#import "PollutionSouceModel.h"
 #import "FactorModel.h"
 @interface PollutionSouceMapViewController ()<BMKMapViewDelegate,BMKLocationServiceDelegate>
 @property (nonatomic,strong)BMKMapView *mapView;
@@ -47,26 +47,27 @@
     [self.view addSubview:_mapView];
     _mapView.delegate =self;
     
-    //添加图层覆盖物，可画出区域边界
-    NSArray *arr =@[@[@"121.266375",@"30.339198"],@[@"121.84474",@"29.854256"],@[@"121.542335",@"29.546055"],@[@"121.046757",@"29.60536"]];
-    CLLocationCoordinate2D *coors = malloc([arr count]*sizeof(CLLocationCoordinate2D));
-    for (int i =0; i <arr.count; i ++) {
-        coors[i].longitude =[arr[i][0] doubleValue];
-        coors[i].latitude =[arr[i][1] doubleValue];
-    }
-
-    BMKPolygon *gon =[BMKPolygon polygonWithCoordinates:coors count:arr.count] ;
-    [_mapView addOverlay:gon];
-
-    NSArray *arr1 =@[@[@"121.957424",@"30.180482"],@[@"122.110351",@"30.160499"],@[@"122.328819",@"29.962451"]];
-    CLLocationCoordinate2D *coors1 = malloc([arr count]*sizeof(CLLocationCoordinate2D));
-    for (int i =0; i <arr1.count; i ++) {
-        coors1[i].longitude =[arr1[i][0] doubleValue];
-        coors1[i].latitude =[arr1[i][1] doubleValue];
-    }
-
-    BMKPolygon *gon1 =[BMKPolygon polygonWithCoordinates:coors1 count:arr1.count] ;
-    [_mapView addOverlay:gon1];
+//    //添加图层覆盖物，可画出区域边界
+//    NSArray *arr =@[@[@"121.266375",@"30.339198"],@[@"121.84474",@"29.854256"],@[@"121.542335",@"29.546055"],@[@"121.046757",@"29.60536"]];
+//    CLLocationCoordinate2D *coors = malloc([arr count]*sizeof(CLLocationCoordinate2D));
+//    for (int i =0; i <arr.count; i ++) {
+//        coors[i].longitude =[arr[i][0] doubleValue];
+//        coors[i].latitude =[arr[i][1] doubleValue];
+//    }
+//
+//    BMKPolygon *gon =[BMKPolygon polygonWithCoordinates:coors count:arr.count] ;
+//    [_mapView addOverlay:gon];
+//
+//    NSArray *arr1 =@[@[@"121.957424",@"30.180482"],@[@"122.110351",@"30.160499"],@[@"122.328819",@"29.962451"]];
+//    CLLocationCoordinate2D *coors1 = malloc([arr count]*sizeof(CLLocationCoordinate2D));
+//    for (int i =0; i <arr1.count; i ++) {
+//        coors1[i].longitude =[arr1[i][0] doubleValue];
+//        coors1[i].latitude =[arr1[i][1] doubleValue];
+//    }
+//
+//    BMKPolygon *gon1 =[BMKPolygon polygonWithCoordinates:coors1 count:arr1.count] ;
+//    [_mapView addOverlay:gon1];
+//
     
     
     
@@ -79,7 +80,6 @@
     [_mapView updateLocationViewWithParam:param];
     
     _location =[[BMKLocationService alloc]init];
-    _location.delegate =self;
     //设定定位的最小更新距离
     _location.distanceFilter =30;
     [_location startUserLocationService];
@@ -90,18 +90,16 @@
     
     
     
-//    _annotationArray =[[NSMutableArray alloc]init];
-//
-//    for (NSInteger i =0; i <self.airEnvironmentArray.count; i ++) {
-//        PagedListModel *model =self.airEnvironmentArray[i];
-//        BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
-//        annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
-//        DLog(@"%@",model.aqiModel.AQI);
-//        annotation.title =[NSString stringWithFormat:@"%@",model.aqiModel.AQI];
-//        [_annotationArray addObject:annotation];
-//
-//    }
-//    [self.mapView addAnnotations:_annotationArray];
+    _annotationArray =[[NSMutableArray alloc]init];
+
+    for (NSInteger i =0; i <self.pullutionsArray.count; i ++) {
+        PollutionSouceModel *model =self.pullutionsArray[i];
+        BMKPointAnnotation *annotation =[[BMKPointAnnotation alloc]init];
+        annotation.coordinate =CLLocationCoordinate2DMake([model.lat floatValue], [model.lng floatValue]);
+        annotation.title =[NSString stringWithFormat:@"%@",model.name];
+        [_annotationArray addObject:annotation];
+    }
+    [self.mapView addAnnotations:_annotationArray];
     
 }
 
@@ -122,9 +120,9 @@
 }
 
 
-- (void)setAirEnvironmentArray:(NSMutableArray *)airEnvironmentArray{
+- (void)setPullutionsArray:(NSMutableArray *)pullutionsArray{
+    _pullutionsArray =pullutionsArray;
     
-    _airEnvironmentArray = airEnvironmentArray;
     
 }
 
@@ -146,17 +144,30 @@
     
 }
 
-
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view{
+    MapAnnotationView * annotationView = (MapAnnotationView *)view;
+    DLog(@"%@",annotationView.titleLab.text);
+    for (PollutionSouceModel *model in self.pullutionsArray) {
+        if ([model.name containsString:annotationView.titleLab.text]) {
+            PollutionSouceInfoViewController *pollutionInfoVC =[[PollutionSouceInfoViewController alloc]init];
+            pollutionInfoVC.souceModel =model;
+            pollutionInfoVC.title =model.name;
+            [self.navigationController pushViewController:pollutionInfoVC animated:YES];
+        }
+    }
+    annotationView.selected =NO;
+}
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    _location.delegate =self;
     _mapView.delegate =self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     _mapView.delegate =nil;
-    
+    _location.delegate =nil;
 }
 
 - (void)didUpdateUserHeading:(BMKUserLocation *)userLocation{
@@ -181,19 +192,13 @@
     self.navigationController.navigationBar.hidden =NO;
     self.tabBarController.tabBar.hidden =YES;
     
-    UIButton *img =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [img addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    [img setImage:[PubulicObj changeImage:[UIImage imageNamed:@"45"] WithSize:CGSizeMake(18, 18)]
-         forState:UIControlStateNormal];
-    [img setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
-    UIBarButtonItem *left =[[UIBarButtonItem alloc]initWithCustomView:img];
-    left.tintColor =[UIColor lightGrayColor];
-    self.navigationItem.leftBarButtonItem =left;
+    UIBarButtonItem* leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"45"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];    leftBarButtonItem.imageInsets =UIEdgeInsetsMake(0, -10, 0, 10);
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
     
     
 }
-
-
 
 - (void)goBack{
     

@@ -9,9 +9,9 @@
 #import "PollutionSourceViewController.h"
 #import "PollutionSourceCell.h"
 #import "PollutionSouceInfoViewController.h"
-#import "PagedListModel.h"
 #import "PollutionSouceMapViewController.h"//地图
 
+#import "PollutionSouceModel.h"
 #import "CustomeSearchView.h"//搜索框
 
 @interface PollutionSourceViewController ()<UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate>
@@ -21,6 +21,8 @@
 @property (nonatomic,strong)NSMutableArray *dataArray;
 
 @property (nonatomic,copy)NSString *searchKey;
+
+@property (nonatomic,strong)NSMutableArray *currentArray;
 
 @end
 
@@ -42,25 +44,17 @@
     [super viewDidLoad];
     self.searchKey =@"";
     self.dataArray =[[NSMutableArray alloc]init];
-    for (NSInteger i =0 ; i <10; i ++) {
-        CGFloat a = arc4random()%100;
-        NSString *pm =[NSString stringWithFormat:@"%.1f",a];
-        DLog(@"a==%f,pm===%@",a,pm);
-
-        NSDictionary *dic =@{@"address":@"中科路",@"PM":pm};
-        [self.dataArray addObject:dic];
-
-    }
+    self.currentArray =[[NSMutableArray alloc]init];
     [self.view addSubview:self.myTable];
     [self customNavigationBar];
     [self creatSearchView];
-//    [self makeData];
+    [self makeData];
     
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.dataArray.count;
+    return self.currentArray.count;
     
 }
 
@@ -76,11 +70,8 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PollutionSourceCell *cell =[tableView dequeueReusableCellWithIdentifier:@"PollutionSourceCell" forIndexPath:indexPath];
-//    PagedListModel *model =self.dataArray[indexPath.row];
-    NSDictionary *dic =self.dataArray[indexPath.row];
-    
-    cell.titleLab.text =dic[@"address"];
-    cell.infoLab.text =[NSString stringWithFormat:@"AQI:%@",dic[@"PM"]];
+    PollutionSouceModel *model =self.currentArray[indexPath.row];
+    cell.titleLab.text =[NSString stringWithFormat:@"%@",model.name];
     return cell;
 }
 
@@ -88,8 +79,11 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    PollutionSouceInfoViewController *plooutionInfoVC =[[PollutionSouceInfoViewController alloc]init];
-    [self.navigationController pushViewController:plooutionInfoVC animated:YES];
+    PollutionSouceInfoViewController *pollutionInfoVC =[[PollutionSouceInfoViewController alloc]init];
+    PollutionSouceModel *model =self.currentArray[indexPath.row];
+    pollutionInfoVC.souceModel =model;
+    pollutionInfoVC.title =model.name;
+    [self.navigationController pushViewController:pollutionInfoVC animated:YES];
     
     
     
@@ -135,7 +129,7 @@
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"] &&searchBar.returnKeyType ==UIReturnKeySearch){
         DLog(@"搜索");
-        [self makeData];
+        [self getSearchResult];
         [self.view endEditing:YES];
         
         //判断输入的字是否是回车，即按下return
@@ -148,7 +142,7 @@
     DLog(@"调用了");
     self.searchKey =searchText;
     if ([searchText  isEqual:@""]) {
-        [self makeData];
+        [self getSearchResult];
     }
 }
 
@@ -159,14 +153,11 @@
     self.navigationController.navigationBar.hidden =NO;
     self.tabBarController.tabBar.hidden =YES;
     
-    UIButton *img =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 18, 18)];
-    [img addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
-    [img setImage:[PubulicObj changeImage:[UIImage imageNamed:@"45"] WithSize:CGSizeMake(18, 18)]
-         forState:UIControlStateNormal];
-    [img setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
-    UIBarButtonItem *left =[[UIBarButtonItem alloc]initWithCustomView:img];
-    left.tintColor =[UIColor lightGrayColor];
-    self.navigationItem.leftBarButtonItem =left;
+    UIBarButtonItem* leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"45"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];    leftBarButtonItem.imageInsets =UIEdgeInsetsMake(0, -10, 0, 10);
+
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
+    
     
     UIButton *rightBut =[[UIButton alloc]initWithFrame:CGRectMake(0, 0, 30, 30)];
     [rightBut addTarget:self action:@selector(goMap) forControlEvents:UIControlEventTouchUpInside];
@@ -180,6 +171,8 @@
 
 - (void)goMap{
     PollutionSouceMapViewController *mapVC =[[PollutionSouceMapViewController alloc]init];
+    mapVC.pullutionsArray =self.currentArray;
+    
     [self.navigationController pushViewController:mapVC animated:YES];
     
 }
@@ -190,31 +183,45 @@
 }
 
 
-#pragma mark 获取站点
+#pragma mark 获得企业列表
 - (void)makeData{
     
-    NSString *urlStr =[NSString stringWithFormat:@"%@api/location/PagedList",BASEURL];
-    NSMutableDictionary *dic =[[NSMutableDictionary alloc]init];
-    [dic setObject:self.searchKey forKey:@"searchKey"];
-    [dic setObject:@"0" forKey:@"pageIndex"];
-    [dic setObject:@"0" forKey:@"type"];
-    [dic setObject:@"3" forKey:@"subType"];
+    NSString *urlStr =[NSString stringWithFormat:@"%@api/AppEnterprise/GetEnterpriseList?keys=",BASEURL];
+  
     WS(blockSelf);
-    
-    [AFNetRequest HttpPostCallBack:urlStr Parameters:dic success:^(id responseObject) {
-        DLog(@"responseObject===%@",responseObject);
-        [blockSelf.dataArray removeAllObjects];
-        for (NSDictionary *items in responseObject[@"Items"]) {
-            PagedListModel *model =[[PagedListModel alloc]initWithDic:items];
+  
+    [AFNetRequest HttpGetCallBack:urlStr Parameters:nil success:^(id responseObject) {
+                DLog(@"responseObject===%@",responseObject);
+        for (NSDictionary *dic in responseObject[@"items"]) {
+            PollutionSouceModel *model =[[PollutionSouceModel alloc]initWithDic:dic];
             [blockSelf.dataArray addObject:model];
+            [blockSelf.currentArray addObject:model];
         }
-//        [blockSelf getAQI];
-        
         [blockSelf.myTable reloadData];
         
     } failure:^(NSError *error) {
         
     } isShowHUD:YES];
+    
 }
+
+#pragma mark --获取搜索结果
+- (void)getSearchResult{
+    NSLog(@"%@",self.searchKey);
+    
+    [self.currentArray removeAllObjects];
+    for (PollutionSouceModel *listModel in self.dataArray) {
+  
+        if (self.searchKey.length ==0 ||self.searchKey ==nil) {
+            [self.currentArray addObject:listModel];
+        }
+        if ([listModel.name containsString:self.searchKey]) {
+            [self.currentArray addObject:listModel];
+        }
+    }
+    [self.myTable reloadData];
+    
+}
+
 @end
 

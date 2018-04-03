@@ -155,12 +155,11 @@
               isShowHUD:(BOOL)animation{
     [SVProgressHUD setMaximumDismissTimeInterval:2];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
-    Url = [Url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
+    Url = [NSString stringWithString:[Url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
     
     dispatch_async(dispatch_get_global_queue(0,0), ^{
     
-        
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFJSONRequestSerializer serializer];
         [manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
@@ -174,6 +173,9 @@
             [SVProgressHUD show];
         }
         DLog(@"url ===%@",[NSString stringWithFormat:@"https://%@/%@", [CustomAccount sharedCustomAccount].stationUrl, Url]);
+        
+        DLog(@"accessToken==%@",[CustomAccount sharedCustomAccount].accessToken);
+        
         [manager GET:[NSString stringWithFormat:@"https://%@/%@", [CustomAccount sharedCustomAccount].stationUrl, Url] parameters:dict progress:^(NSProgress * _Nonnull downloadProgress) {
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             if (animation) {

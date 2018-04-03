@@ -10,7 +10,7 @@
 
 @interface AirEnvironmentFooter ()
 {
-    NSDate*nowDate;
+    NSDate *nowDate;
     
 }
 @property (nonatomic,strong) UIScrollView *scr ;
@@ -38,7 +38,6 @@
         [self.contentView addSubview:seagment];
         [seagment addTarget:self action:@selector(changeSelect:) forControlEvents:UIControlEventValueChanged];
         
-        
         nowDate =[PubulicObj getNowDateWithDate:[NSDate date]];
         _timeArray =[[NSMutableArray alloc]init];
         NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
@@ -57,9 +56,7 @@
             NSDate *lastDate = [[NSDate alloc]initWithTimeInterval:-60*60*24*(30-i) sinceDate:nowDate];
             
             [_dateArray addObject:[formatter1 stringFromDate:lastDate]];
-        }
-        
-        
+        }        
     }
     
     return self;
@@ -111,22 +108,24 @@
     NSDate *lastDate = [[NSDate alloc]initWithTimeInterval:-60*60*24 sinceDate:nowDate];
     
     NSDateFormatter *formatter =[[NSDateFormatter alloc]init];
-    formatter.dateFormat =@"YYYY-MM-dd";
-    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+    formatter.dateFormat =@"yyyy-MM-dd HH:00:00";
+//    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     
     NSString *nowTime =[formatter stringFromDate:nowDate];
     NSString *lastTime = [formatter stringFromDate:lastDate];
     
-    
-    NSString *urlstr = [NSString stringWithFormat:@"%@api/FactorData/GetFactVal?refId=%@&fromType=0&dType=H&vType=0&facId=%@&dataType=0&sDate=%@&eDate=%@",BASEURL,self.pageModel.Id,_currentModel.Id,nowTime,nowTime];
+    DLog(@"结束：%@,开始：%@",nowTime,lastTime);
+    NSString *urlstr = [NSString stringWithFormat:@"%@api/FactorData/GetFactVal?refId=%@&fromType=0&dType=H&vType=0&facId=%@&dataType=0&sDate=%@&eDate=%@",BASEURL,self.pageModel.StationId,_currentModel.Id,lastTime,nowTime];
     
     if (self.segementIndex ==1) {
+        formatter.dateFormat =@"yyyy-MM-dd";
         lastDate = [[NSDate alloc]initWithTimeInterval:-60*60*24*30 sinceDate:nowDate];
         lastTime = [formatter stringFromDate:lastDate];
-        urlstr = [NSString stringWithFormat:@"%@api/FactorData/GetFactVal?refId=%@&fromType=0&dType=D&vType=0&facId=%@&dataType=0&sDate=%@&eDate=%@",BASEURL,self.pageModel.Id,_currentModel.Id,lastTime,nowTime];
+        urlstr = [NSString stringWithFormat:@"%@api/FactorData/GetFactVal?refId=%@&fromType=0&dType=D&vType=0&facId=%@&dataType=0&sDate=%@&eDate=%@",BASEURL,self.pageModel.StationId,_currentModel.Id,lastTime,nowTime];
     }
     //    [parame setObject:lastTime forKey:@"sDate"];
     //    [parame setObject:nowTime forKey:@"eDate"];
+    
     WS(blockSelf);
     [AFNetRequest HttpGetCallBack:urlstr Parameters:nil success:^(id responseObject) {
         [blockSelf.dataArray removeAllObjects];

@@ -58,7 +58,7 @@
         [self.contentView addSubview:_backLab];
         [_backLab mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(blockSelf.contentView).offset =10;
-            make.right.equalTo(blockSelf.contentView).offset =-80;
+            make.right.equalTo(blockSelf.contentView).offset =screenWigth==320?-80:-115;
             make.bottom.equalTo(blockSelf.contentView).offset =-10;
                         make.width.offset =55;
         }];
@@ -66,15 +66,34 @@
         _backLab.font =FontSize(screenWigth==320?12:14);
         _backLab.textAlignment =NSTextAlignmentCenter;
         _backLab.backgroundColor =zhuse;
-        _backLab.text =@"PM2.5";
         _backLab.textColor =[UIColor whiteColor];
-        _backLab.hidden =YES;
-  
+        _backLab.adjustsFontSizeToFitWidth =YES;
     }
     return self;
 }
 
-
+- (void)setListModel:(PagedListModel *)listModel{
+    _listModel =listModel;
+    _titleLab.text =listModel.StationName;
+    if (listModel.aqiInfoModel ==nil) {
+        _numLab.textColor =[UIColor groupTableViewBackgroundColor];
+        _titleLab.textColor =[UIColor grayColor];
+        _backLab.backgroundColor =[UIColor grayColor];
+        _backLab.text =@"无数据";
+        _PMLab.text =@"";
+    }
+    else{
+        _numLab.textColor =[UIColor blackColor];
+        _titleLab.textColor =[UIColor blackColor];
+        _backLab.backgroundColor =zhuse;
+        _backLab.text =[NSString stringWithFormat:@"%@",listModel.aqiInfoModel.facName];
+        if (_isAQI ==YES) {
+            _PMLab.text =[NSString stringWithFormat:@"%@",listModel.aqiInfoModel.AQI];
+        }else{
+            _PMLab.text =[NSString stringWithFormat:@"%@",listModel.aqiInfoModel.PM25];
+        }
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
